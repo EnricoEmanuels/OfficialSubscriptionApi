@@ -6,6 +6,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import sr.unasat.subscription.api.config.JPAConfig;
 
 public class SubscriptionConfig{
     public static void main(String[] args) throws Exception {
@@ -14,14 +15,14 @@ public class SubscriptionConfig{
         // Create a Jetty server
         Server server = new Server(8080);
 
-        // Create a ServletContextHandler
+        // Create a ServletContextHandler  ( dit is voor je default patch)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
         // Configure Jersey
         ResourceConfig config = new ResourceConfig();
         config.register(JacksonFeature.class); // Register Jackson for JSON support
-        config.packages("sr.unasat.subscription.api.controllers"); // Replace with your package name
+        config.packages("sr.unasat.subscription.api.controllers"); // Replace with your package name (hij zal alleen kijken in de packages die jij hebt aangegeven waarin die resources zijn als zijn er andere resources/controllers die je niet hebt aangegeven hij gaat niet erin kijken )
 
         // Add the Jersey ServletContainer to the context
         ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(config));
@@ -31,6 +32,9 @@ public class SubscriptionConfig{
         // Register CORSFilter
         FilterHolder corsFilter = new FilterHolder(new CORSFilter());
         context.addFilter(corsFilter, "/*", null);
+
+        JPAConfig.getEntityMangerFactory();
+        JPAConfig.getEntityManger();
 
         // Set the handler and start the server
         server.setHandler(context);

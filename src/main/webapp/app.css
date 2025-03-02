@@ -1,55 +1,54 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
 }
-
+h1 {
+    color: #333;
+}
 form {
-    width: 30em;
-    padding: 5em;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 1em;
-    background-color: #908f8f;
-    font-weight: bold;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .form-group {
     display: flex;
-    align-items: center;
-    margin-top: 1em;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
 }
-
 .form-group label {
-    width: 8em;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="tel"] {
-    flex: 1;
-    padding: 0.5em;
+.form-group input,
+.form-group select {
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 0.5em;
+    border-radius: 5px;
+    font-size: 1em;
 }
-
-.form-group input[type="radio"],
-.form-group input[type="checkbox"] {
-    margin-right: 0.5em;
-}
-
 input[type="submit"] {
-    margin-top: 1em;
-    padding: 0.7em;
+    width: 100%;
+    padding: 10px;
     border: none;
-    border-radius: 0.5em;
+    border-radius: 5px;
     background-color: #007BFF;
     color: white;
     font-size: 1em;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
-
 input[type="submit"]:hover {
     background-color: #0056b3;
 }
-
 .validation-message {
     color: red;
     font-size: 0.8em;

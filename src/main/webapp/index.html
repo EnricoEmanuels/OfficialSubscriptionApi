@@ -2,55 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription API</title>
     <link href="app.css" rel="stylesheet"/>
-    <script src="app.js"></script>
+    <script defer src="app.js"></script>
 </head>
 <body>
 <h1>Subscription API</h1>
-<button id=fetchSubscriptionsButton">Get All Subscriptions</button>
-<div id="subscriptions"></div>
-
-<form id="subscriptionRegistration">
-    <div class="form-group">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" >
-        <span class="validation-message" id="firstname-validation">First name is required.</span>
-    </div>
-    <div class="form-group">
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" >
-        <span class="validation-message" id="lastname-validation">Last name is required.</span>
-    </div>
-    <div class="form-group">
-        <label for="email" class="backgroundOrange textBlue">Email:</label>
-        <input type="email" id="email" name="email" >
-        <span class="validation-message" id="email-validation">Email is required.</span>
-    </div>
-    <div class="form-group">
-        <label for="phonenumber">Phone Number:</label>
-        <input type="tel" id="phonenumber" name="phonenumber">
-    </div>
-    <div class="form-group">
-        <label>Subscription Type:</label>
-        <input type="radio" id="lite" name="subscription" value="lite">
-        <label for="lite">Lite</label>
-        <input type="radio" id="basic" name="subscription" value="basic">
-        <label for="basic">Basic</label>
-        <input type="radio" id="super" name="subscription" value="super">
-        <label for="super">Super</label>
-    </div>
-    <div class="form-group">
-        <label>Select your channels:</label>
-        <input type="checkbox" id="ufc" name="services" value="ufc">
-        <label for="ufc">UFC</label>
-        <input type="checkbox" id="hbo" name="services" value="hbo">
-        <label for="hbo">HBO</label>
-        <input type="checkbox" id="netflix" name="services" value="netflix">
-        <label for="netflix">Netflix</label>
-    </div>
-    <input type="submit" value="Register">
-</form>
-
+<!-- FORMULIER: CREATE (POST) -->
+<section>
+    <h2>Create Subscription (POST)</h2>
+    <form id="createSubscriptionForm">
+        <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname">
+            <span class="validation-message" id="firstname-validation">First name is required.</span>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname">
+            <span class="validation-message" id="lastname-validation">Last name is required.</span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span class="validation-message" id="email-validation">Email is required.</span>
+        </div>
+        <div class="form-group">
+            <label for="phonenumber">Phone Number:</label>
+            <input type="tel" id="phonenumber" name="phonenumber">
+        </div>
+        <button type="submit">Create Subscription</button>
+    </form>
+    <pre id="createResponse"></pre>
+</section>
+<!-- FORMULIER: UPDATE (PUT) -->
+<section>
+    <h2>Update Subscription (PUT)</h2>
+    <form id="updateSubscriptionForm">
+        <div class="form-group">
+            <label for="update-id">Subscription ID:</label>
+            <input type="text" id="update-id" name="id" required>
+            <span class="validation-message">Subscription ID is required.</span>
+        </div>
+        <div class="form-group">
+            <label for="update-firstname">First Name:</label>
+            <input type="text" id="update-firstname" name="firstname">
+        </div>
+        <div class="form-group">
+            <label for="update-lastname">Last Name:</label>
+            <input type="text" id="update-lastname" name="lastname">
+        </div>
+        <div class="form-group">
+            <label for="update-email">Email:</label>
+            <input type="email" id="update-email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="update-phonenumber">Phone Number:</label>
+            <input type="tel" id="update-phonenumber" name="phonenumber">
+        </div>
+        <button type="submit">Update Subscription</button>
+    </form>
+    <pre id="updateResponse"></pre>
+</section>
+<!-- FORMULIER: DELETE -->
+<section>
+    <h2>Delete Subscription (DELETE)</h2>
+    <form id="deleteSubscriptionForm">
+        <div class="form-group">
+            <label for="delete-id">Subscription ID:</label>
+            <input type="text" id="delete-id" name="id" required>
+            <span class="validation-message">Subscription ID is required.</span>
+        </div>
+        <button type="submit">Delete Subscription</button>
+    </form>
+    <pre id="deleteResponse"></pre>
+</section>
+<!-- ALLE SUBSCRIPTIONS OPHALEN -->
+<section>
+    <h2>All Subscriptions</h2>
+    <button id="fetchSubscriptionsButton">Get All Subscriptions</button>
+    <pre id="subscriptions"></pre>
+</section>
 </body>
 </html>
