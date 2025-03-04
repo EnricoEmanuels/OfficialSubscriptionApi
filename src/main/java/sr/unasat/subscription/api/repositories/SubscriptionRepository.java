@@ -28,61 +28,45 @@ public class SubscriptionRepository implements EntityRepository<Subscription> {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         Subscription updateSubscription = em.find(Subscription.class, subscription.getId());
-        updateSubscription.setFirstname(subscription.getFirstname());
-        updateSubscription.setLastname(subscription.getLastname());
-        updateSubscription.setEmail(subscription.getEmail());
-        updateSubscription.setPhonenumber(subscription.getPhonenumber());
+        if (updateSubscription != null) {
+            updateSubscription.setFirstname(subscription.getFirstname());
+            updateSubscription.setLastname(subscription.getLastname());
+            updateSubscription.setEmail(subscription.getEmail());
+            updateSubscription.setPhonenumber(subscription.getPhonenumber());
+            em.merge(updateSubscription);  // Zorg ervoor dat de update wordt toegepast
+        }
         transaction.commit();
-
     }
-
     @Override
     public List<Subscription> getAll() {
         return em.createQuery("SELECT s FROM Subscription s", Subscription.class).getResultList();
     }
 
-
-}
-
-
-/*public class SubscriptionRepository implements EntityRepository<Subscription> {
-    @Override
-    public void save(Subscription subscription) {
-        EntityManager em = JPAConfig.getEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        try {
-            transaction.begin();
-            em.persist(subscription);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();  // BELANGRIJK! EntityManager moet gesloten worden
-        }
+    public Subscription findById(int id) {
+        return em.find(Subscription.class, id);
     }
+
     @Override
-    public void update(Subscription subscription) {
-        EntityManager em = JPAConfig.getEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        try {
+    public void delete(Subscription subscription) {
+        if (subscription != null) {
+            EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            Subscription updateSubscription = em.find(Subscription.class, subscription.getId());
-            if (updateSubscription != null) {
-                updateSubscription.setFirstname(subscription.getFirstname());
-                updateSubscription.setLastname(subscription.getLastname());
-                updateSubscription.setEmail(subscription.getEmail());
-                updateSubscription.setPhonenumber(subscription.getPhonenumber());
-                em.merge(updateSubscription);
+            Subscription foundSubscription = em.find(Subscription.class, subscription.getId());
+            if (foundSubscription != null) {
+                em.remove(foundSubscription);
             }
             transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();
         }
+    }
+
+    public void deleteById(int id) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Subscription subscription = em.find(Subscription.class, id);
+        if (subscription != null) {
+            em.remove(subscription);
+        }
+        transaction.commit();
     }
 }
 
-*/

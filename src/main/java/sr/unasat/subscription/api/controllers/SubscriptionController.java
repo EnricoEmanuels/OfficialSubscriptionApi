@@ -42,7 +42,7 @@ public class SubscriptionController {
 //    }
 
     @GET
-    @Path("/getall")
+    @Path("")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Subscription> getAllSubscriptions() {
         return subscriptionService.getAllSubscriptions();
@@ -79,22 +79,6 @@ public class SubscriptionController {
 
 
 
-
-//    @POST
-//    @Path("/form")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Subscription createSubscription1( @FormParam ("firstname") String firstname,
-//                                              @FormParam("lastname") String lastname,
-//                                             @FormParam("email") String email,
-//                                             @FormParam("phone") String phone) {
-//
-//        return subscriptionService.saveSubscriptionWithPara(firstname, lastname, email, phone);
-//
-//    }
-
-
-
 //    @PUT
 //    @Path("/{id}")
 //    @Consumes(MediaType.APPLICATION_JSON)
@@ -119,27 +103,39 @@ public class SubscriptionController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateSubscription(@PathParam("id") int id, SubscriptionDTO updatedSubscription) {
-        SubscriptionDTO existingSubscription = subscriptions.stream()
-                .filter(sub -> sub.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public Response updateSubscription(@PathParam("id") int id, Subscription updatedSubscription) {
+        Subscription existingSubscription = subscriptionService.findById(id);
         if (existingSubscription != null) {
             existingSubscription.setFirstname(updatedSubscription.getFirstname());
             existingSubscription.setLastname(updatedSubscription.getLastname());
             existingSubscription.setEmail(updatedSubscription.getEmail());
             existingSubscription.setPhonenumber(updatedSubscription.getPhonenumber());
+            subscriptionService.updateSubscription(existingSubscription);
             return Response.ok(existingSubscription).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
+//    @DELETE
+//    @Path("/{id}")
+//    public Response deleteSubscription(@PathParam("id") long id) {
+//        boolean removed = subscriptions.removeIf(sub -> sub.getId() == id);
+//        if (removed) {
+//            return Response.noContent().build();
+//        } else {
+//            return Response.status(Response.Status.NOT_FOUND).build();
+//        }
+//    }
+
     @DELETE
     @Path("/{id}")
-    public Response deleteSubscription(@PathParam("id") long id) {
-        boolean removed = subscriptions.removeIf(sub -> sub.getId() == id);
-        if (removed) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteSubscription(@PathParam("id") int id) {
+        Subscription existingSubscription = subscriptionService.findById(id);
+
+        if (existingSubscription != null) {
+            subscriptionService.deleteSubscription(id);
             return Response.noContent().build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();

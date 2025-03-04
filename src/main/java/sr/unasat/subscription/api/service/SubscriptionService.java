@@ -31,5 +31,15 @@ public class  SubscriptionService {
         return subscriptionRepository.getAll();
    }
 
+    public Subscription findById(int id) {
+        return subscriptionRepository.findById(id);
+    }
+    public void updateSubscription(Subscription subscription) {
+        subscriptionRepository.update(subscription);
+    }
+    public void deleteSubscription(int id) {
+        subscriptionRepository.deleteById(id);
+    }
+
 
 }
